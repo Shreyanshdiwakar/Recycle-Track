@@ -1,74 +1,186 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Link } from 'expo-router';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+    <ThemedView style={styles.container}>
+      {/* Header Section */}
+      <ThemedView style={styles.headerSection}>
+        <ThemedView style={styles.welcomeContainer}>
+          <ThemedView>
+            <ThemedText style={styles.greeting}>Hi there!</ThemedText>
+            <ThemedText style={styles.subtitle}>Let's contribute to our earth.</ThemedText>
+          </ThemedView>
+          <TouchableOpacity>
+            <IconSymbol name="bell" size={24} color="#4CAF50" />
+          </TouchableOpacity>
+        </ThemedView>
+
+        {/* Quick Category Pills */}
+        <View style={styles.categoryContainer}>
+          <TouchableOpacity style={styles.categoryPill}>
+            <IconSymbol name="leaf" size={20} color="#4CAF50" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.categoryPill}>
+            <IconSymbol name="recycle" size={20} color="#4CAF50" />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.categoryPill, styles.activePill]}>
+            <ThemedText style={styles.pillText}>Plastic</ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.categoryPill}>
+            <IconSymbol name="timer" size={20} color="#4CAF50" />
+          </TouchableOpacity>
+        </View>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
+
+      {/* Mission Card */}
+      <ThemedView style={styles.missionCard}>
+        <ThemedText style={styles.missionTitle}>Recycle 5 plastic</ThemedText>
+        <ThemedText style={styles.pointsText}>EARN 100 POINTS</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
+
+      {/* Core Features Section */}
+      <ThemedView style={styles.actionsSection}>
+        <Link href="/scan" asChild>
+          <TouchableOpacity style={styles.actionButton}>
+            <IconSymbol name="barcode.viewfinder" size={24} color="#fff" />
+            <ThemedText style={styles.actionButtonText}>Scan Item</ThemedText>
+          </TouchableOpacity>
+        </Link>
+
+        <Link href="/map" asChild>
+          <TouchableOpacity style={[styles.actionButton, styles.mapButton]}>
+            <IconSymbol name="map.fill" size={24} color="#fff" style={styles.actionIcon} />
+            <ThemedText style={styles.actionButtonText}>Find Centers</ThemedText>
+          </TouchableOpacity>
+        </Link>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
+
+      {/* Stats Section */}
+      <ThemedView style={styles.statsSection}>
+        <ThemedView style={styles.statCard}>
+          <ThemedText style={styles.statNumber}>0</ThemedText>
+          <ThemedText style={styles.statLabel}>Items Recycled</ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.statCard}>
+          <ThemedText style={styles.statNumber}>0</ThemedText>
+          <ThemedText style={styles.statLabel}>Points Earned</ThemedText>
+        </ThemedView>
       </ThemedView>
-    </ParallaxScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#121212',
   },
-  stepContainer: {
-    gap: 8,
+  headerSection: {
+    marginTop: 20,
+    marginBottom: 24,
+  },
+  welcomeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  greeting: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#888888',
+    marginTop: 4,
+  },
+  categoryContainer: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 16,
+  },
+  categoryPill: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  activePill: {
+    backgroundColor: '#4CAF50',
+  },
+  pillText: {
+    color: '#FFFFFF',
+    fontWeight: '600',
+  },
+  missionCard: {
+    backgroundColor: '#1E1E1E',
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 24,
+  },
+  missionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  pointsText: {
+    fontSize: 14,
+    color: '#4CAF50',
+    fontWeight: '600',
+  },
+  actionsSection: {
+    gap: 16,
+    marginBottom: 24,
+  },
+  actionButton: {
+    backgroundColor: '#4CAF50',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
+    borderRadius: 16,
+    marginBottom: 16,
+  },
+  mapButton: {
+    backgroundColor: '#1976D2',
+  },
+  actionIcon: {
+    marginRight: 12,
+  },
+  actionButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+    marginLeft: 12,
+  },
+  statsSection: {
+    flexDirection: 'row',
+    gap: 16,
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 16,
+    alignItems: 'center',
+  },
+  statNumber: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#4CAF50',
+    marginBottom: 8,
+  },
+  statLabel: {
+    fontSize: 14,
+    color: '#666666',
   },
 });
